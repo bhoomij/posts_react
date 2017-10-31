@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
@@ -59,19 +60,28 @@ class PostsNew extends Component {
 
 function validate(values) {
     const errors = {};
+    _.each(['title', 'categories', 'content'], (field) => {
+        console.log(field);
+        if (!values[field])
+            errors[field] = `${field} is required.`
+    });
 
-    if (!values.title) {
-        errors.title = "Enter a title";
-    }
     if (values.title && values.title.length < 3) {
         errors.title = "Title must be at least 3 characters long";
     }
-    if (!values.categories) {
-        errors.categories = "Enter some categories";
-    }
-    if (!values.content) {
-        errors.content = "Enter some content";
-    }
+
+    // if (!values.title) {
+    //     errors.title = "Enter a title";
+    // }
+    // if (values.title && values.title.length < 3) {
+    //     errors.title = "Title must be at least 3 characters long";
+    // }
+    // if (!values.categories) {
+    //     errors.categories = "Enter some categories";
+    // }
+    // if (!values.content) {
+    //     errors.content = "Enter some content";
+    // }
 
     return errors;
 }
